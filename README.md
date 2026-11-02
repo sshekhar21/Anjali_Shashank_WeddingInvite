@@ -1,54 +1,48 @@
 # Anjali & Shashank — Wedding Invitation Website
 
-A mobile-first, GitHub Pages-ready wedding invitation inspired by the visual flow of the reference template, with original custom artwork and Anjali & Shashank's event details.
+A self-contained, responsive wedding invitation website designed to be hosted free on **GitHub Pages**. It recreates the sequence and visual language of the supplied mobile screen recording: animated envelope opening, sunset palace welcome, ornamental invitation, event cards, gallery, RSVP, countdown and closing scene.
 
-## Included
+> This is a hand-built visual recreation from the screen recording, not the original site's source code. Some original artwork and exact animation assets cannot be recovered from a screen recording. The project uses original CSS/SVG-style artwork and editable content rather than copying the recording frame-by-frame.
 
-- Full-screen illustrated envelope intro with a clickable golden-seal hotspot and skip control
-- Watercolour palace hero with animated petals and elegant typography
-- Ornamental invitation card
-- Three wedding event cards
-- Interactive photo gallery with temporary placeholders
-- RSVP form (email handoff; configure recipient before publishing)
-- Live countdown to 26 November 2026 (IST)
-- Interactive wish-lantern release animation
-- Responsive mobile layout and reduced-motion support
+## Preview locally
 
-## Personalisation
+Open `index.html` in a browser, or run a local static server:
 
-### Replace gallery placeholders
-
-Add your photographs to `assets/photos/` (for example `couple-1.jpg`, `couple-2.jpg`, etc.). Then update the gallery markup in `index.html` to use `<img>` elements and set their `src` paths. The current gallery is intentionally using temporary decorative placeholders.
-
-### Configure RSVP
-
-Open `script.js` and replace:
-
-```js
-const RSVP_EMAIL='YOUR_EMAIL@example.com';
+```bash
+python -m http.server 8000
 ```
 
-with the email address that should receive RSVP messages. The form opens the visitor's email app using a pre-filled message. For automatic online collection without requiring the visitor's email app, connect a Google Form or another form endpoint.
-
-### Add music (optional)
-
-Only use music you have permission to publish. Add an MP3 as `assets/ambient.mp3`, then replace the explanatory sound-toggle handler in `script.js` with an audio player. No music file is bundled in this project.
-
-### Add venue and timings
-
-The ceremony timings and venue were not provided, so the project deliberately says that details will be shared soon. Update the event copy in `index.html` once those details are final.
+Then visit `http://localhost:8000`.
 
 ## Publish on GitHub Pages (free)
 
-1. Create a new **public** repository on GitHub.
-2. Upload the contents of this folder (the `index.html` file must be at the repository root).
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, select **Deploy from a branch**.
-5. Choose branch `main` and folder `/ (root)`, then Save.
-6. Wait for GitHub Pages to publish. Your URL will look like `https://YOUR-USERNAME.github.io/REPOSITORY-NAME/`.
+1. Create a new **public** repository on GitHub, e.g. `anjali-shashank-wedding`.
+2. Extract this project ZIP and upload all files and folders in this directory to the repository root (make sure `index.html` is at the root).
+3. In GitHub, open **Settings → Pages**.
+4. Under **Build and deployment**, choose **Deploy from a branch**.
+5. Select branch `main` and folder `/ (root)`, then Save.
+6. Wait for GitHub Pages to publish. Your link will look like `https://YOUR-USERNAME.github.io/anjali-shashank-wedding/`.
+7. Share that link in WhatsApp.
 
-No build step, framework, package manager, or server is required.
+## Personalise before publishing
 
-## Asset note
+- **Names and wedding date:** edit the visible text in `index.html`.
+- **Countdown time:** in `script.js`, edit `2026-11-26T17:00:00+05:30` to the actual ceremony start time. The timezone is India Standard Time.
+- **Event details:** edit the three `.event-card` blocks in `index.html`.
+- **RSVP email:** in `script.js`, replace `YOUR_EMAIL@example.com` with the email address that should receive RSVP messages. The form opens the guest's email app; it does not store submissions on a server.
+- **Gallery:** the current gallery uses elegant illustrated placeholders. To use your own photos, add your images to `assets/photos/` and update the gallery markup/styles. (No personal photos were included in the screen recording project.)
+- **Sky lantern animation:** the traditional glowing paper lanterns rise only within the opening palace hero screen. Their artwork is in `assets/images/traditional-sky-lantern.png`; the animation fades in near the bottom, glows through the middle and fades out as it leaves the top. Falling petals continue across the full page.
+- **Music:** add a royalty-free MP3 named `ambient.mp3` inside `assets/` to enable the music button. Browsers require a user tap before audio can play.
 
-The envelope and palace illustrations in `assets/images/` are newly generated artwork for this project. The website uses its own HTML, CSS, and JavaScript rather than copying the reference site's source code. Google Fonts are loaded from Google Fonts; the site otherwise uses local project assets.
+## Project structure
+
+```text
+anjali-shashank-invitation/
+├── index.html
+├── style.css
+├── script.js
+├── README.md
+└── assets/
+```
+
+No build tools, frameworks, paid hosting, API keys or backend are required.
