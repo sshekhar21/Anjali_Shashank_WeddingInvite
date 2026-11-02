@@ -1,0 +1,22 @@
+const $=(selector,root=document)=>root.querySelector(selector);
+const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
+const intro=$('#intro'),site=$('#site');let opened=false;
+function enterSite(){if(opened)return;opened=true;intro.classList.add('opening');setTimeout(()=>{intro.classList.add('fade');site.classList.remove('is-hidden');observeReveals();makePetals();setTimeout(()=>intro.remove(),950)},850)}
+$('#openInvite').addEventListener('click',enterSite);$('#skipIntro').addEventListener('click',enterSite);
+function observeReveals(){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target)}}),{threshold:.12});$$('.reveal').forEach(el=>io.observe(el))}
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#scrollProgress').style.width=(max>0?scrollY/max*100:0)+'%'},{passive:true});
+function makePetals(){const layer=$('.floating-petals');if(!layer)return;for(let i=0;i<22;i++){const p=document.createElement('i');p.className='petal';p.style.setProperty('--left',`${Math.random()*100}%`);p.style.setProperty('--duration',`${8+Math.random()*12}s`);p.style.setProperty('--delay',`${-Math.random()*18}s`);p.style.setProperty('--drift',`${-70+Math.random()*140}px`);layer.appendChild(p)}}
+// Wedding-day countdown uses India Standard Time. Event time is not yet specified.
+function updateCountdown(){const target=new Date('2026-11-26T00:00:00+05:30').getTime(),diff=Math.max(0,target-Date.now());$('#days').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');$('#hours').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');$('#minutes').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');$('#seconds').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0')}
+updateCountdown();setInterval(updateCountdown,1000);
+// Gallery placeholders are deliberately local and easy to replace with real couple photographs.
+const captions=['A moment to remember','Golden-hour memories','A little forever','The beginning of always'];let photoIndex=0;
+function showPhoto(index){photoIndex=(index+captions.length)%captions.length;const photo=$('#galleryPhoto');photo.className=`gallery-photo photo-${['one','two','three','four'][photoIndex]}`;$('#photoCaption').textContent=captions[photoIndex];$('#photoCounter').textContent=`0${photoIndex+1} / 04`;$$('#galleryThumbs button').forEach((button,i)=>button.classList.toggle('selected',i===photoIndex))}
+$('#prevPhoto').addEventListener('click',()=>showPhoto(photoIndex-1));$('#nextPhoto').addEventListener('click',()=>showPhoto(photoIndex+1));$$('#galleryThumbs button').forEach(button=>button.addEventListener('click',()=>showPhoto(Number(button.dataset.index))));
+// RSVP: configure RSVP_EMAIL below, or replace this mailto handler with a Google Forms endpoint.
+const RSVP_EMAIL='YOUR_EMAIL@example.com';
+$('#rsvpForm').addEventListener('submit',event=>{event.preventDefault();const data=new FormData(event.currentTarget);const body=[`Name: ${data.get('name')}`,`Phone: ${data.get('phone')}`,`Attendance: ${data.get('attendance')}`,`Guests: ${data.get('guests')}`,`Message: ${data.get('message')||'—'}`].join('\n');if(RSVP_EMAIL.includes('YOUR_EMAIL')){$('#formStatus').textContent='RSVP form preview is working. Add your email address in script.js to receive submissions.';return}location.href=`mailto:${RSVP_EMAIL}?subject=${encodeURIComponent('Wedding RSVP — Anjali & Shashank')}&body=${encodeURIComponent(body)}`;$('#formStatus').textContent='Your email app is opening with your RSVP.'});
+// Lantern release interaction.
+$('#releaseLantern').addEventListener('click',()=>{const layer=$('#floatingLanterns');for(let i=0;i<7;i++){const lantern=document.createElement('span');lantern.className='wish-lantern';lantern.textContent='♧';lantern.style.left=`${12+Math.random()*76}%`;lantern.style.setProperty('--drift',`${-90+Math.random()*180}px`);lantern.style.animationDelay=`${i*.22}s`;layer.appendChild(lantern);setTimeout(()=>lantern.remove(),8000)}});
+// Music is intentionally not bundled; the control explains how to add a licensed audio file.
+$('#soundToggle').addEventListener('click',()=>{alert('To enable music, add your licensed MP3 as assets/ambient.mp3 and connect it to the player in index.html.')});
