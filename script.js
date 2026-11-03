@@ -35,9 +35,30 @@ function makeHeroLanterns(){
 function updateCountdown(){const target=new Date('2026-11-26T00:00:00+05:30').getTime(),diff=Math.max(0,target-Date.now());$('#days').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');$('#hours').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');$('#minutes').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');$('#seconds').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0')}
 updateCountdown();setInterval(updateCountdown,1000);
 // Gallery placeholders are deliberately local and easy to replace with real couple photographs.
-const captions=['A moment to remember','Golden-hour memories','A little forever','The beginning of always'];let photoIndex=0;
-function showPhoto(index){photoIndex=(index+captions.length)%captions.length;const photo=$('#galleryPhoto');photo.className=`gallery-photo photo-${['one','two','three','four'][photoIndex]}`;$('#photoCaption').textContent=captions[photoIndex];$('#photoCounter').textContent=`0${photoIndex+1} / 04`;$$('#galleryThumbs button').forEach((button,i)=>button.classList.toggle('selected',i===photoIndex))}
-$('#prevPhoto').addEventListener('click',()=>showPhoto(photoIndex-1));$('#nextPhoto').addEventListener('click',()=>showPhoto(photoIndex+1));$$('#galleryThumbs button').forEach(button=>button.addEventListener('click',()=>showPhoto(Number(button.dataset.index))));
+const gallerySlides=[
+  {src:'assets/images/painted-moments-01.png',alt:'Anjali and Shashank together in an ornate floral wedding frame',caption:'Hand in hand'},
+  {src:'assets/images/painted-moments-02.png',alt:'Anjali and Shashank seated together in an ornate floral wedding frame',caption:'A moment to remember'}
+];
+let photoIndex=0;
+function showPhoto(index){
+  photoIndex=(index+gallerySlides.length)%gallerySlides.length;
+  const slide=gallerySlides[photoIndex];
+  const photo=$('#galleryPhoto');
+  const image=photo.querySelector('.gallery-slide-image');
+  image.style.opacity='0';
+  window.setTimeout(()=>{
+    image.src=slide.src;
+    image.alt=slide.alt;
+    image.style.opacity='1';
+  },120);
+  $('#photoCaption').textContent=slide.caption;
+  $$('#galleryIndicators button').forEach((button,i)=>button.classList.toggle('selected',i===photoIndex));
+  $$('#galleryThumbs button').forEach((button,i)=>button.classList.toggle('selected',i===photoIndex));
+}
+$('#prevPhoto').addEventListener('click',()=>showPhoto(photoIndex-1));
+$('#nextPhoto').addEventListener('click',()=>showPhoto(photoIndex+1));
+$$('#galleryIndicators button').forEach(button=>button.addEventListener('click',()=>showPhoto(Number(button.dataset.index))));
+$$('#galleryThumbs button').forEach(button=>button.addEventListener('click',()=>showPhoto(Number(button.dataset.index))));
 // RSVP submissions are sent directly to the linked Google Form.
 // The hidden iframe lets this static GitHub Pages site POST cross-origin without a backend.
 const GOOGLE_FORM_RESPONSE_URL='https://docs.google.com/forms/d/e/1FAIpQLSeUVdqhUBoEdHY8F3KegZm7fOwU-dkOE_tAcS5E7W5W9YxM-g/formResponse';

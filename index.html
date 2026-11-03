@@ -115,23 +115,39 @@
     </section>
 
     <section class="gallery" id="gallery">
-      <div class="gallery-heading reveal"><p class="eyebrow">A FEW MOMENTS, FOREVER</p><h2>Painted moments</h2><p>A little album of the story we're writing.</p></div>
-      <div class="gallery-layout reveal">
-        <button class="gallery-arrow" id="prevPhoto" aria-label="Previous photograph">‹</button>
-        <div class="gallery-frame"><div class="gallery-photo photo-one" id="galleryPhoto"><div class="placeholder-couple"><span>♡</span><small>YOUR PHOTO HERE</small></div><p class="photo-counter" id="photoCounter">01 / 04</p></div><div class="frame-caption" id="photoCaption">A moment to remember</div></div>
-        <button class="gallery-arrow" id="nextPhoto" aria-label="Next photograph">›</button>
+      <div class="gallery-heading reveal">
+        <p class="eyebrow">A FEW MOMENTS, FOREVER</p>
+        <h2>Painted moments</h2>
+        <p>A little album of the story we're writing.</p>
+        <div class="gallery-heading-flourish"><img src="assets/images/events-heading-ornament.png" alt="" aria-hidden="true"></div>
       </div>
-      <div class="gallery-thumbnails" id="galleryThumbs"><button class="selected" data-index="0" aria-label="Show photograph one"><span>01</span></button><button data-index="1" aria-label="Show photograph two"><span>02</span></button><button data-index="2" aria-label="Show photograph three"><span>03</span></button><button data-index="3" aria-label="Show photograph four"><span>04</span></button></div>
-      <p class="gallery-note">Temporary gallery artwork — replace with your photographs in <code>assets/photos/</code>.</p>
+      <div class="gallery-layout reveal">
+        <button class="gallery-arrow" id="prevPhoto" type="button" aria-label="Previous photograph">‹</button>
+        <div class="gallery-frame">
+          <div class="gallery-photo" id="galleryPhoto">
+            <img class="gallery-slide-image" src="assets/images/painted-moments-01.png" alt="Anjali and Shashank together in an ornate floral wedding frame">
+          </div>
+        </div>
+        <button class="gallery-arrow" id="nextPhoto" type="button" aria-label="Next photograph">›</button>
+      </div>
+      <div class="frame-caption" id="photoCaption">Hand in hand</div>
+      <div class="gallery-indicators" id="galleryIndicators" aria-label="Choose photograph">
+        <button class="selected" type="button" data-index="0" aria-label="Show photograph one"></button>
+        <button type="button" data-index="1" aria-label="Show photograph two"></button>
+      </div>
+      <div class="gallery-thumbnails" id="galleryThumbs">
+        <button class="selected" type="button" data-index="0" aria-label="Show photograph one"><img src="assets/images/painted-moments-01.png" alt=""></button>
+        <button type="button" data-index="1" aria-label="Show photograph two"><img src="assets/images/painted-moments-02.png" alt=""></button>
+      </div>
       <p class="section-index"><span>03</span> OUR MEMORIES</p>
     </section>
 
-    <section class="rsvp section-paper" id="rsvp">
+    <section class="rsvp section-paper" id="rsvp" style="background-image: url('assets/images/painted-moments-background-1.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
       <div class="rsvp-decoration" aria-hidden="true">❦</div>
       <div class="rsvp-card reveal"><header class="section-heading"><p class="eyebrow">KINDLY REPLY</p><h2>Will you be there?</h2><p>A seat at our table is already yours.</p></header>
         <form id="rsvpForm">
           <label>Your name<input name="name" autocomplete="name" placeholder="Full name" required></label>
-          <label>Phone number<input name="phone" type="tel" autocomplete="tel" placeholder="+91 ..." required></label>
+          <label>Phone number<input name="phone" type="tel" autocomplete="tel" placeholder="+91 ..."></label>
           <fieldset><legend>Will you be joining us?</legend><label class="radio-option"><input type="radio" name="attendance" value="Joyfully yes" checked><span>Joyfully yes</span></label><label class="radio-option"><input type="radio" name="attendance" value="Regretfully no"><span>Regretfully no</span></label></fieldset>
           <label>Number of guests<input name="guests" type="number" min="1" max="10" value="1" required></label>
           <label>A message for us<textarea name="message" rows="3" placeholder="Your blessings & wishes..."></textarea></label>
@@ -145,7 +161,7 @@
       <img class="countdown-art" src="assets/images/palace-watercolor.png" alt="Palace at sunset">
       <div class="countdown-overlay"></div>
       <div class="countdown-content reveal"><p class="eyebrow">THE BIG DAY IS ALMOST HERE</p><h2>Counting Down to<br><em>Forever</em></h2>
-        <div class="count-grid"><div class="count-item"><strong id="days">000</strong><span>DAYS</span></div><div class="count-item"><strong id="hours">00</strong><span>HOURS</span></div><div class="count-item"><strong id="minutes">00</strong><span>MINUTES</span></div><div class="count-item"><strong id="seconds">00</strong><span>SECONDS</span></div></div>
+        <div class="count-grid"><div class="count-item"><strong id="days">00</strong><span>DAYS</span></div><div class="count-item"><strong id="hours">00</strong><span>HOURS</span></div><div class="count-item"><strong id="minutes">00</strong><span>MINUTES</span></div><div class="count-item"><strong id="seconds">00</strong><span>SECONDS</span></div></div>
         <div class="heading-flourish">✧ ── ❦ ── ✧</div><p class="closing-line">Come early. Stay late.<br>Dance <em>badly</em> with us.</p>
         <p class="with-love">With all our love<br><strong>Anjali &amp; Shashank</strong><br>&amp; our families</p>
         <p class="closing-date">THURSDAY · 26 NOVEMBER 2026</p>
