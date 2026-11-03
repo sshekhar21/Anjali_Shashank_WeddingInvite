@@ -32,7 +32,7 @@ function makeHeroLanterns(){
   heroLanternTimer=setInterval(()=>addHeroLantern(),3600);
 }
 // Wedding-day countdown uses India Standard Time. Event time is not yet specified.
-function updateCountdown(){const target=new Date('2026-11-26T00:00:00+05:30').getTime(),diff=Math.max(0,target-Date.now());$('#days').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');$('#hours').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');$('#minutes').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');$('#seconds').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0')}
+function updateCountdown(){const target=new Date('2026-11-26T00:00:00+05:30').getTime(),diff=Math.max(0,target-Date.now());$('#days').textContent=String(Math.floor(diff/86400000)).padStart(2,'0');$('#hours').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');$('#minutes').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');$('#seconds').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0')}
 updateCountdown();setInterval(updateCountdown,1000);
 // Gallery placeholders are deliberately local and easy to replace with real couple photographs.
 const gallerySlides=[
