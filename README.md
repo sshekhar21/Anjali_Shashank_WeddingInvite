@@ -46,3 +46,10 @@ anjali-shashank-invitation/
 ```
 
 No build tools, frameworks, paid hosting, API keys or backend are required.
+
+
+### Version 18 update
+- Added the supplied baby Ganesha artwork at the top of the invitation text, displayed at a modest size.
+- Reworked the invitation opening lines to match the supplied reference: “With the blessings of the divine” and “at the celebration of our wedding”.
+- Added a centered pink lotus ornament below the opening lines.
+- Increased the invitation typography while keeping all text centered inside the existing frame.

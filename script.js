@@ -38,8 +38,65 @@ updateCountdown();setInterval(updateCountdown,1000);
 const captions=['A moment to remember','Golden-hour memories','A little forever','The beginning of always'];let photoIndex=0;
 function showPhoto(index){photoIndex=(index+captions.length)%captions.length;const photo=$('#galleryPhoto');photo.className=`gallery-photo photo-${['one','two','three','four'][photoIndex]}`;$('#photoCaption').textContent=captions[photoIndex];$('#photoCounter').textContent=`0${photoIndex+1} / 04`;$$('#galleryThumbs button').forEach((button,i)=>button.classList.toggle('selected',i===photoIndex))}
 $('#prevPhoto').addEventListener('click',()=>showPhoto(photoIndex-1));$('#nextPhoto').addEventListener('click',()=>showPhoto(photoIndex+1));$$('#galleryThumbs button').forEach(button=>button.addEventListener('click',()=>showPhoto(Number(button.dataset.index))));
-// RSVP: configure RSVP_EMAIL below, or replace this mailto handler with a Google Forms endpoint.
-const RSVP_EMAIL='YOUR_EMAIL@example.com';
-$('#rsvpForm').addEventListener('submit',event=>{event.preventDefault();const data=new FormData(event.currentTarget);const body=[`Name: ${data.get('name')}`,`Phone: ${data.get('phone')}`,`Attendance: ${data.get('attendance')}`,`Guests: ${data.get('guests')}`,`Message: ${data.get('message')||'—'}`].join('\n');if(RSVP_EMAIL.includes('YOUR_EMAIL')){$('#formStatus').textContent='RSVP form preview is working. Add your email address in script.js to receive submissions.';return}location.href=`mailto:${RSVP_EMAIL}?subject=${encodeURIComponent('Wedding RSVP — Anjali & Shashank')}&body=${encodeURIComponent(body)}`;$('#formStatus').textContent='Your email app is opening with your RSVP.'});
+// RSVP submissions are sent directly to the linked Google Form.
+// The hidden iframe lets this static GitHub Pages site POST cross-origin without a backend.
+const GOOGLE_FORM_RESPONSE_URL='https://docs.google.com/forms/d/e/1FAIpQLSeUVdqhUBoEdHY8F3KegZm7fOwU-dkOE_tAcS5E7W5W9YxM-g/formResponse';
+const RSVP_FIELDS={
+  name:'entry.1914091421',
+  phone:'entry.331237101',
+  attendance:'entry.1465332909',
+  guests:'entry.750387527',
+  message:'entry.916307692'
+};
+const rsvpForm=$('#rsvpForm');
+const rsvpButton=rsvpForm.querySelector('.submit-button');
+let rsvpSubmitting=false;
+rsvpForm.addEventListener('submit',event=>{
+  event.preventDefault();
+  if(rsvpSubmitting)return;
+  if(!rsvpForm.reportValidity())return;
+  const data=new FormData(rsvpForm);
+  const iframeName='googleFormsRsvpTarget';
+  let target=document.getElementById(iframeName);
+  if(!target){
+    target=document.createElement('iframe');
+    target.name=iframeName;
+    target.id=iframeName;
+    target.title='Google Forms submission';
+    target.setAttribute('aria-hidden','true');
+    target.style.cssText='position:absolute;width:1px;height:1px;left:-9999px;border:0';
+    document.body.appendChild(target);
+  }
+  const postForm=document.createElement('form');
+  postForm.method='POST';
+  postForm.action=GOOGLE_FORM_RESPONSE_URL;
+  postForm.target=iframeName;
+  postForm.style.display='none';
+  const attendanceValue=data.get('attendance')==='Joyfully yes'?'Yes':'No';
+  const values={
+    [RSVP_FIELDS.name]:String(data.get('name')||'').trim(),
+    [RSVP_FIELDS.phone]:String(data.get('phone')||'').trim(),
+    [RSVP_FIELDS.attendance]:attendanceValue,
+    [RSVP_FIELDS.guests]:String(data.get('guests')||'1'),
+    [RSVP_FIELDS.message]:String(data.get('message')||'').trim()
+  };
+  Object.entries(values).forEach(([name,value])=>{
+    const input=document.createElement('input');
+    input.type='hidden';input.name=name;input.value=value;
+    postForm.appendChild(input);
+  });
+  document.body.appendChild(postForm);
+  rsvpSubmitting=true;
+  rsvpButton.disabled=true;
+  rsvpButton.textContent='SENDING YOUR RSVP…';
+  $('#formStatus').textContent='Sending your response securely to our RSVP form…';
+  postForm.submit();
+  // Google Forms accepts the POST in the background; give its response time to complete.
+  window.setTimeout(()=>{
+    $('#formStatus').textContent='Thank you! Your RSVP has been submitted. We look forward to celebrating with you.';
+    rsvpButton.textContent='RSVP SUBMITTED ✓';
+    postForm.remove();
+  },1800);
+});
 // Music is intentionally not bundled; the control explains how to add a licensed audio file.
 $('#soundToggle').addEventListener('click',()=>{alert('To enable music, add your licensed MP3 as assets/ambient.mp3 and connect it to the player in index.html.')});
