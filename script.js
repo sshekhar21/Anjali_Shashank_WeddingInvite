@@ -36,8 +36,8 @@ function updateCountdown(){const target=new Date('2026-11-26T00:00:00+05:30').ge
 updateCountdown();setInterval(updateCountdown,1000);
 // Gallery placeholders are deliberately local and easy to replace with real couple photographs.
 const gallerySlides=[
-  {src:'assets/images/painted-moments-01.png',alt:'Anjali and Shashank together in an ornate floral wedding frame',caption:'Hand in hand'},
-  {src:'assets/images/painted-moments-02.png',alt:'Anjali and Shashank seated together in an ornate floral wedding frame',caption:'A moment to remember'}
+  {src:'assets/images/painted-moments-01.png',alt:'Anjali and Shashank together in an ornate floral wedding frame'},
+  {src:'assets/images/painted-moments-02.png',alt:'Anjali and Shashank seated together in an ornate floral wedding frame'}
 ];
 let photoIndex=0;
 function showPhoto(index){
