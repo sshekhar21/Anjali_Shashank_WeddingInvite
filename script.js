@@ -1,7 +1,7 @@
 const $=(selector,root=document)=>root.querySelector(selector);
 const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
 const intro=$('#intro'),site=$('#site');let opened=false;
-function enterSite(){if(opened)return;opened=true;intro.classList.add('opening');setTimeout(()=>{intro.classList.add('fade');site.classList.remove('is-hidden');document.body.classList.add('music-ready');observeReveals();makePetals();makeHeroLanterns();setTimeout(()=>intro.remove(),950)},850)}
+function enterSite(){if(opened)return;opened=true;startWeddingMusic();intro.classList.add('opening');setTimeout(()=>{intro.classList.add('fade');site.classList.remove('is-hidden');document.body.classList.add('music-ready');observeReveals();makePetals();makeHeroLanterns();setTimeout(()=>intro.remove(),950)},850)}
 $('#openInvite').addEventListener('click',enterSite);$('#skipIntro').addEventListener('click',enterSite);
 function observeReveals(){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target)}}),{threshold:.12});$$('.reveal').forEach(el=>io.observe(el))}
 window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#scrollProgress').style.width=(max>0?scrollY/max*100:0)+'%'},{passive:true});
