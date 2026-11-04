@@ -872,3 +872,8 @@
 body.music-ready .sound-toggle{
   display:flex;
 }
+/* Version 37 — indicate when the local wedding audio is playing */
+.sound-toggle.is-playing{
+  background:#80594e;
+  color:#fffaf4;
+}
