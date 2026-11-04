@@ -119,35 +119,44 @@ rsvpForm.addEventListener('submit',event=>{
     postForm.remove();
   },1800);
 });
-// Wedding music: playback is user-initiated and available only after the envelope opens.
+// Wedding music: attempt autoplay directly from the envelope/skip click gesture.
+// Browsers allow this more reliably because enterSite() is called by a user click.
 const weddingAudio=$('#weddingAudio');
 const soundToggle=$('#soundToggle');
+function updateMusicButton(isPlaying){
+  soundToggle.classList.toggle('is-playing',isPlaying);
+  soundToggle.setAttribute('aria-pressed',String(isPlaying));
+  soundToggle.setAttribute('aria-label',isPlaying?'Pause wedding music':'Play wedding music');
+  soundToggle.setAttribute('title',isPlaying?'Pause wedding music':'Play wedding music');
+}
+function startWeddingMusic(){
+  if(!weddingAudio)return;
+  const playAttempt=weddingAudio.play();
+  if(playAttempt&&typeof playAttempt.then==='function'){
+    playAttempt.then(()=>updateMusicButton(true)).catch(error=>{
+      // If the browser blocks playback, leave the visible button ready for a tap.
+      updateMusicButton(false);
+      console.info('Browser blocked automatic audio playback; tap the music button to start.',error);
+    });
+  }else{
+    updateMusicButton(!weddingAudio.paused);
+  }
+}
 soundToggle.addEventListener('click',async()=>{
   if(!weddingAudio)return;
   if(weddingAudio.paused){
     try{
       await weddingAudio.play();
-      soundToggle.classList.add('is-playing');
-      soundToggle.setAttribute('aria-pressed','true');
-      soundToggle.setAttribute('aria-label','Pause wedding music');
-      soundToggle.setAttribute('title','Pause wedding music');
+      updateMusicButton(true);
     }catch(error){
-      soundToggle.setAttribute('aria-label','Play wedding music');
-      soundToggle.setAttribute('title','Tap to play wedding music');
+      updateMusicButton(false);
       console.error('Unable to play the wedding audio:',error);
     }
   }else{
     weddingAudio.pause();
-    soundToggle.classList.remove('is-playing');
-    soundToggle.setAttribute('aria-pressed','false');
-    soundToggle.setAttribute('aria-label','Play wedding music');
-    soundToggle.setAttribute('title','Play wedding music');
+    updateMusicButton(false);
   }
 });
-weddingAudio.addEventListener('ended',()=>{
-  soundToggle.classList.remove('is-playing');
-  soundToggle.setAttribute('aria-pressed','false');
-  soundToggle.setAttribute('aria-label','Play wedding music');
-  soundToggle.setAttribute('title','Play wedding music');
-});
-
+weddingAudio.addEventListener('play',()=>updateMusicButton(true));
+weddingAudio.addEventListener('pause',()=>updateMusicButton(false));
+weddingAudio.addEventListener('ended',()=>updateMusicButton(false));
