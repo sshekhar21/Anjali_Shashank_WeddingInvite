@@ -10,7 +10,10 @@
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
-  <button class="sound-toggle" id="soundToggle" type="button" aria-label="Sound is not configured" title="Add your music file to enable music">♫</button>
+  <button class="sound-toggle" id="soundToggle" type="button" aria-label="Play wedding music" title="Play wedding music" aria-pressed="false">♫</button>
+  <audio id="weddingAudio" preload="none" loop>
+    <source src="assets/audio/wedding-music.mp3" type="audio/mpeg">
+  </audio>
 
   <section class="intro" id="intro" aria-label="Tap to open the wedding invitation">
     <img class="intro-art" src="assets/images/opening-envelope.png" alt="An ivory wedding envelope with a golden seal on a marble pedestal, surrounded by flowers and a palace at sunset">
