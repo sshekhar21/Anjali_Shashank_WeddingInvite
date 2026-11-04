@@ -862,3 +862,13 @@
 .rsvp-card:before{
   border-radius:15px;
 }
+/* Version 36 — keep music controls off the envelope opening screen.
+   The button becomes visible only after the invitation has opened. */
+.sound-toggle{
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+body.music-ready .sound-toggle{
+  display:flex;
+}
