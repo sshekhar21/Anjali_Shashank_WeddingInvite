@@ -119,5 +119,35 @@ rsvpForm.addEventListener('submit',event=>{
     postForm.remove();
   },1800);
 });
-// Music is intentionally not bundled; the control explains how to add a licensed audio file.
-$('#soundToggle').addEventListener('click',()=>{alert('To enable music, add your licensed MP3 as assets/ambient.mp3 and connect it to the player in index.html.')});
+// Wedding music: playback is user-initiated and available only after the envelope opens.
+const weddingAudio=$('#weddingAudio');
+const soundToggle=$('#soundToggle');
+soundToggle.addEventListener('click',async()=>{
+  if(!weddingAudio)return;
+  if(weddingAudio.paused){
+    try{
+      await weddingAudio.play();
+      soundToggle.classList.add('is-playing');
+      soundToggle.setAttribute('aria-pressed','true');
+      soundToggle.setAttribute('aria-label','Pause wedding music');
+      soundToggle.setAttribute('title','Pause wedding music');
+    }catch(error){
+      soundToggle.setAttribute('aria-label','Play wedding music');
+      soundToggle.setAttribute('title','Tap to play wedding music');
+      console.error('Unable to play the wedding audio:',error);
+    }
+  }else{
+    weddingAudio.pause();
+    soundToggle.classList.remove('is-playing');
+    soundToggle.setAttribute('aria-pressed','false');
+    soundToggle.setAttribute('aria-label','Play wedding music');
+    soundToggle.setAttribute('title','Play wedding music');
+  }
+});
+weddingAudio.addEventListener('ended',()=>{
+  soundToggle.classList.remove('is-playing');
+  soundToggle.setAttribute('aria-pressed','false');
+  soundToggle.setAttribute('aria-label','Play wedding music');
+  soundToggle.setAttribute('title','Play wedding music');
+});
+
